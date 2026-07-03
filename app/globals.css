@@ -1,0 +1,155 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  main {
+    background: linear-gradient(135deg, #fff6e5 0%, #f5ede4 50%, #fffbf0 100%);
+    background-image:
+      linear-gradient(135deg, #fff6e5 0%, #f5ede4 50%, #fffbf0 100%),
+      url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' result='noise' /%3E%3CfeColorMatrix in='noise' type='saturate' values='0' /%3E%3C/filter%3E%3Crect width='400' height='400' fill='%23f5ede4' opacity='0.04' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    background-size: 100%, 200px 200px;
+    background-position: center, center;
+    background-repeat: no-repeat, repeat;
+  }
+}
+
+:root {
+  --ink: #1f3630;
+  --parchment: #efe6d4;
+  --gold: #c99a3b;
+  --paprika: #a8452f;
+  --charcoal: #2b2724;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--ink);
+  color: var(--parchment);
+  font-family: var(--font-poppins);
+}
+
+.postmark {
+  border: 1.5px solid var(--paprika);
+  border-radius: 999px;
+  color: var(--paprika);
+  font-family: var(--font-jbmono), monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  position: relative;
+}
+
+.postmark::before {
+  content: "";
+  position: absolute;
+  inset: 3px;
+  border: 1px dashed var(--paprika);
+  border-radius: 999px;
+  opacity: 0.6;
+}
+
+.postcard {
+  background: var(--parchment);
+  color: var(--charcoal);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.postcard:hover {
+  transform: translateY(-4px) rotate(0deg) !important;
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.45);
+}
+
+.pin {
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #e8c765, var(--gold));
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+@keyframes steamRise {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 4px, 0) scale(0.5) rotate(0deg);
+    filter: blur(0px);
+  }
+  12% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 0.5;
+    transform: translate3d(4px, -16px, 0) scale(1) rotate(6deg);
+    filter: blur(0.5px);
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(-6px, -34px, 0) scale(1.6) rotate(-8deg);
+    filter: blur(2px);
+  }
+}
+
+.steam-bubble {
+  position: absolute;
+  bottom: 0;
+  width: 9px;
+  height: 13px;
+  border-radius: 50% 50% 50% 50% / 65% 65% 35% 35%;
+  background: radial-gradient(
+    circle at 40% 30%,
+    rgba(255, 255, 255, 0.95),
+    rgba(255, 255, 255, 0.25) 65%,
+    transparent 100%
+  );
+  opacity: 0;
+  pointer-events: none;
+  animation: steamRise 1.8s ease-in-out infinite;
+  animation-play-state: paused;
+}
+
+.steam-one {
+  left: -12px;
+  width: 7px;
+  height: 10px;
+  animation-delay: 0s;
+}
+
+.steam-two {
+  left: 0px;
+  width: 10px;
+  height: 15px;
+  animation-delay: 0.4s;
+}
+
+.steam-three {
+  left: 12px;
+  width: 8px;
+  height: 12px;
+  animation-delay: 0.8s;
+}
+
+.group:hover .steam-bubble {
+  animation-play-state: running;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .postcard {
+    transition: none;
+  }
+
+  .steam-bubble {
+    animation: none;
+    opacity: 0;
+  }
+}
